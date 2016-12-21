@@ -4,6 +4,7 @@ import (
 	"github.com/zubairhamed/charlotte"
 	"github.com/zubairhamed/charlotte/connectors/coap"
 	"github.com/zubairhamed/charlotte/connectors/http"
+	"github.com/zubairhamed/charlotte/webapis/w3c"
 )
 
 // This is the All-in-one version of Charlotte (for Development Purposes Only)
@@ -18,7 +19,7 @@ func main() {
 	go runWebApi()
 
 	// Runs Lambda Service
-	go runLambda()
+	// go runLambda()
 
 	<-make(chan struct{})
 }
@@ -47,6 +48,8 @@ func runRegistry() {
 
 func runWebApi() {
 	server := charlotte.NewWebApiServer()
+
+	server.RegisterWebInterface(wc3.NewWebInterface())
 
 	if err := server.Start(); err != nil {
 		panic(err.Error())

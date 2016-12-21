@@ -5,7 +5,6 @@ func NewWebFunctionsServer() *WebFunctionsServer {
 }
 
 type WebFunctionsServer struct {
-
 }
 
 func (s *WebFunctionsServer) Start() error {

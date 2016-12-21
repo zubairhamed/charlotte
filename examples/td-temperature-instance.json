@@ -1,0 +1,34 @@
+{
+  myTemp: {
+    value: 123
+  },
+  myThreshold: {
+    value: 234
+  }
+}
+
+
+{
+  "@context": ["https://w3c.github.io/wot/w3c-wot-td-context.jsonld",
+    "https://w3c.github.io/wot/w3c-wot-common-context.jsonld"],
+  "@type": "Sensor",
+  "name": "myTempSensor",
+  "base" : "coap:///www.example.com:5683/temp/",
+  "interactions": [
+    {
+      "@type": ["Event"],
+      "outputType": {"valueType": { "type": "number" }},
+      "name": "myChange",
+      "property": "temp",
+      "links": [{
+        "href" : "val/changed",
+        "mediaType": "application/json"
+      }]
+    }, {
+      "@type": ["Event"],
+      "outputType": {"valueType": { "type": "number" }},
+      "name": "myWarning",
+      "hrefs": ["val/high"]
+    }
+  ]
+}

@@ -1,9 +1,9 @@
 package charlotte
 
 import (
-	"github.com/nats-io/go-nats"
 	"fmt"
 	"github.com/boltdb/bolt"
+	"github.com/nats-io/go-nats"
 	"log"
 )
 
@@ -27,7 +27,6 @@ func (s *Registry) Start() error {
 	})
 
 	s.nc = nc
-
 	// TODO Connect to BoltDB
 	db, err := bolt.Open("registry.db", 0600, nil)
 	if err != nil {

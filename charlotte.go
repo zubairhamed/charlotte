@@ -14,3 +14,11 @@ type Server interface {
 	RegisterConnector(Connector) error
 	Start() error
 }
+
+type ResourceModel struct {
+}
+
+type WebInterface interface {
+	Start() error
+	Stop() error
+}

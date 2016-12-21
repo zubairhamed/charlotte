@@ -14,7 +14,7 @@ func NewConnector() charlotte.Connector {
 
 type CoapConnector struct {
 	charlotte.BaseConnector
-	nc *nats.Conn
+	nc     *nats.Conn
 	server canopus.CoapServer
 }
 
@@ -34,7 +34,7 @@ func (c *CoapConnector) Start() (err error) {
 		if err := c.nc.Publish(topic, msg.GetPayload().GetBytes()); err != nil {
 			panic(err.Error())
 		}
-		
+
 		return canopus.NewResponse(canopus.ContentMessage(req.GetMessage().GetMessageId(), canopus.MessageAcknowledgment), nil)
 	})
 
@@ -45,4 +45,3 @@ func (c *CoapConnector) Start() (err error) {
 func (c *CoapConnector) Stop() error {
 	return nil
 }
-

@@ -13,7 +13,7 @@ func main() {
 		panic(err.Error())
 	}
 
-	req := canopus.NewRequest(canopus.MessageConfirmable, canopus.Get, canopus.GenerateMessageID()).(*canopus.CoapRequest)
+	req := canopus.NewRequest(canopus.MessageConfirmable, canopus.Get).(*canopus.CoapRequest)
 	req.SetStringPayload("Hello, canopus")
 	req.SetRequestURI("/td/dev1")
 
