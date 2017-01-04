@@ -2,7 +2,7 @@
   "@context": ["https://w3c.github.io/wot/w3c-wot-td-context.jsonld",
     "https://w3c.github.io/wot/w3c-wot-common-context.jsonld"],
   "@type": "Sensor",
-  "name": "myTempSensor",
+  "name": "temperature-sensor-1",
   "base" : "coap:///www.example.com:5683/temp/",
   "interactions": [
     {
@@ -10,7 +10,7 @@
       "@type": ["Property","Temperature"],
       "unit": "celsius",
       "reference": "threshold",
-      "name": "myTemp",
+      "name": "temp",
       "outputType": {"valueType": { "type": "number" }},
       "writable": false,
       "links": [{
@@ -21,7 +21,7 @@
       "@id": "threshold",
       "@type": ["Property","Temperature"],
       "unit": "celsius",
-      "name": "myThreshold",
+      "name": "threshold",
       "outputType": {"valueType": { "type": "number" }},
       "writable": true,
       "links": [{
@@ -32,7 +32,7 @@
     {
       "@type": ["Event"],
       "outputType": {"valueType": { "type": "number" }},
-      "name": "myChange",
+      "name": "temperatureChange",
       "property": "temp",
       "links": [{
         "href" : "val/changed",
@@ -41,7 +41,7 @@
     }, {
       "@type": ["Event"],
       "outputType": {"valueType": { "type": "number" }},
-      "name": "myWarning",
+      "name": "temperatureWarning",
       "hrefs": ["val/high"]
     }
   ]

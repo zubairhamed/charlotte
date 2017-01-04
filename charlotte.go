@@ -22,3 +22,9 @@ type WebInterface interface {
 	Start() error
 	Stop() error
 }
+
+////////////////////////////////////
+type Message struct {
+	Vars map[string] string
+	Payload []byte
+}
