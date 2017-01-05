@@ -1,14 +1,14 @@
 package charlotte
 
 import (
-	"github.com/alecthomas/template"
-	"path/filepath"
-	"os"
-	"strings"
-	"log"
-	"github.com/gorilla/mux"
 	"github.com/NYTimes/gziphandler"
+	"github.com/alecthomas/template"
+	"github.com/gorilla/mux"
+	"log"
 	"net/http"
+	"os"
+	"path/filepath"
+	"strings"
 )
 
 func NewServer() Server {
@@ -19,7 +19,7 @@ func NewServer() Server {
 
 type CharlotteServer struct {
 	connectors []Connector
-	tpl           *template.Template
+	tpl        *template.Template
 }
 
 func (s *CharlotteServer) RegisterConnector(conn Connector) error {
@@ -79,14 +79,13 @@ func (s *CharlotteServer) startDashboard() {
 	log.Println("Running Dashboard on :8010. Ready to rock!")
 	http.ListenAndServe(":8010", nil)
 
-
 	/*
 		/
 		/?<dashboardname>
 		/things/?<id>
 		/things/add
 		/connectors/?<id>
-	 */
+	*/
 }
 
 func (s *CharlotteServer) renderTemplate(w http.ResponseWriter, tmpl string, p interface{}) {
@@ -97,7 +96,6 @@ func (s *CharlotteServer) renderTemplate(w http.ResponseWriter, tmpl string, p i
 	}
 }
 
-
 func (s *CharlotteServer) handleDashboard(rw http.ResponseWriter, req *http.Request) {
 	m := &PageModel{
 		Name: "home",
@@ -107,5 +105,5 @@ func (s *CharlotteServer) handleDashboard(rw http.ResponseWriter, req *http.Requ
 }
 
 type PageModel struct {
-	Name    string
+	Name string
 }

@@ -1,13 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"bytes"
-	"time"
-	"net/http"
-	"math/rand"
-	"log"
+	"fmt"
 	"github.com/zubairhamed/canopus"
+	"log"
+	"math/rand"
+	"net/http"
+	"time"
 )
 
 // Simulates multiple devices using multiple protocols
@@ -29,7 +29,6 @@ func startHttpDevice() {
 		val := fmt.Sprintf("%d", rand.Intn(50))
 		log.Println("[HTTP] Sending out", val)
 		r := bytes.NewReader([]byte(val))
-
 
 		req, _ := http.NewRequest("PUT", ep, r)
 		req.Header.Set("Content-Type", "application/json")

@@ -1,12 +1,12 @@
 package charlotte
 
 import (
+	"encoding/json"
 	"github.com/boltdb/bolt"
 	"github.com/nats-io/go-nats"
-	"log"
-	"encoding/json"
-	"io/ioutil"
 	"github.com/zubairhamed/charlotte/td"
+	"io/ioutil"
+	"log"
 )
 
 func NewRegistry() *Registry {
@@ -51,7 +51,6 @@ func (s *Registry) Start() error {
 }
 
 type BoltDB struct {
-
 }
 
 func (b *BoltDB) Setup() error {
@@ -129,7 +128,7 @@ func (b *BoltDB) GetThingModel() (thing *td.Thing, err error) {
 	return
 }
 
-func (b *BoltDB) DeleteThing() (err error){
+func (b *BoltDB) DeleteThing() (err error) {
 	db, err := b.open()
 	if err != nil {
 		return err

@@ -58,12 +58,12 @@ func (c *HttpConnector) onUpdateProperty(w http.ResponseWriter, r *http.Request)
 	c.nc.Publish(t, charlotte.EncodeMessage(charlotte.CreateMessage(vars, b)))
 }
 
-func (c *HttpConnector) onGetThing(w http.ResponseWriter, r *http.Request) {}
-func (c *HttpConnector) onGetThingModel(w http.ResponseWriter, r *http.Request) {}
-func (c *HttpConnector) onUpdateThing(w http.ResponseWriter, r *http.Request) {}
-func (c *HttpConnector) onGetProperty(w http.ResponseWriter, r *http.Request) {}
-func (c *HttpConnector) onUpdateTask(w http.ResponseWriter, r *http.Request) {}
-func (c *HttpConnector) onCancelTask(w http.ResponseWriter, r *http.Request) {}
+func (c *HttpConnector) onGetThing(w http.ResponseWriter, r *http.Request)           {}
+func (c *HttpConnector) onGetThingModel(w http.ResponseWriter, r *http.Request)      {}
+func (c *HttpConnector) onUpdateThing(w http.ResponseWriter, r *http.Request)        {}
+func (c *HttpConnector) onGetProperty(w http.ResponseWriter, r *http.Request)        {}
+func (c *HttpConnector) onUpdateTask(w http.ResponseWriter, r *http.Request)         {}
+func (c *HttpConnector) onCancelTask(w http.ResponseWriter, r *http.Request)         {}
 func (c *HttpConnector) onUpdateSubscription(w http.ResponseWriter, r *http.Request) {}
 func (c *HttpConnector) onCancelSubscription(w http.ResponseWriter, r *http.Request) {}
 

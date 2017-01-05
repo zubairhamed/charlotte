@@ -43,24 +43,18 @@
 
 #dashboard-conf-bottom {
     width: 100%;
-    text-align: center;
+    text-align: center ;
 }
 
 .dashboard-conf-button {
+    width: 200px;
     float: left;
     background: none;
     color: white;
     border: 1px solid white;
     margin: 10px;
-}
-
-.pct-eighty {
-    width: 75%;
-
-}
-
-.pct-twenty {
-    width: 15%
+    font-size: 0.8em;
+    border-radius: 3px;
 }
 
 .dashboard-conf-col-dashboard-content {

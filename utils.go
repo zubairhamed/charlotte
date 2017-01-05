@@ -1,9 +1,9 @@
 package charlotte
 
 import (
-	"github.com/nats-io/go-nats"
 	"bytes"
 	"encoding/gob"
+	"github.com/nats-io/go-nats"
 )
 
 func CreateNatsClient(url string) (nc *nats.Conn, err error) {
@@ -12,9 +12,9 @@ func CreateNatsClient(url string) (nc *nats.Conn, err error) {
 	return
 }
 
-func CreateMessage(v map[string] string, b []byte) (m *Message) {
+func CreateMessage(v map[string]string, b []byte) (m *Message) {
 	return &Message{
-		Vars: v,
+		Vars:    v,
 		Payload: b,
 	}
 }

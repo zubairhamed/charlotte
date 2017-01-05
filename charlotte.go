@@ -25,6 +25,6 @@ type WebInterface interface {
 
 ////////////////////////////////////
 type Message struct {
-	Vars map[string] string
+	Vars    map[string]string
 	Payload []byte
 }
