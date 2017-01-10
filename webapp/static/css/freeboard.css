@@ -46,6 +46,11 @@
     text-align: center ;
 }
 
+.dashboard-conf-button-center {
+    margin: 0 auto;
+    width: 60%
+}
+
 .dashboard-conf-button {
     width: 200px;
     float: left;

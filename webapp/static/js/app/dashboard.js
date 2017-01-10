@@ -1,34 +1,45 @@
+angular.module('charlotte-app', []).controller('dashboard-controller', function($scope) {
+    freeboard.initialize(true);
+    freeboard.setEditing(false);
 
+    $scope.onClickNewDataSource = onClickNewDataSource
+    $scope.onClickRefreshDataSource = onClickRefreshDataSource
+    $scope.onClickDeleteDataSource = onClickDeleteDataSource
+    $scope.onClickNewDashboard = onClickNewDashboard
+    $scope.onClickSaveDashboard = onClickSaveDashboard
+    $scope.onClickLoadDashboard = onClickLoadDashboard
+    $scope.onClickDeleteDashboard = onClickDeleteDashboard
 
+    // TODO
+    // Read current dashboard and if not, default
+    // Load dashboard list
+    // Populate datasources
+});
 
-head.js("js/freeboard_plugins.min.js",
-    // *** Load more plugins here ***
-    function(){
-        $(function()
-        { //DOM Ready
-            freeboard.initialize(true);
+function onClickNewDataSource() {
+    alert("onClickNewDataSource")
+}
 
-            var hashpattern = window.location.hash.match(/(&|#)source=([^&]+)/);
-            if (hashpattern !== null) {
-                $.getJSON(hashpattern[2], function(data) {
-                    freeboard.loadDashboard(data, function() {
-                        freeboard.setEditing(false);
-                    });
-                });
-            }
+function onClickRefreshDataSource() {
+    alert("onClickRefreshDataSource")
+}
 
-        });
-    });
+function onClickDeleteDataSource() {
+    alert("onClickDeleteDataSource")
+}
 
-/*
+function onClickNewDashboard() {
+    alert("onClickNewDashboard")
+}
 
-loadDashboard
-saveDashboard
-deleteDashboard
+function onClickSaveDashboard() {
+    alert("onClickSaveDashboard")
+}
 
+function onClickLoadDashboard() {
+    alert("onClickLoadDashboard")
+}
 
- addDatasource
- deleteDatasource
- updateDatasource
-
- */
+function onClickDeleteDashboard() {
+    alert("onClickDeleteDashboard")
+}

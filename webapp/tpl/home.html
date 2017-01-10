@@ -1,8 +1,7 @@
 #{ define "home" }#
 #{ template "header" . }#
-
 <!DOCTYPE html>
-<html>
+<html ng-app="charlotte-app" ng-controller="dashboard-controller">
 <head>
     <meta charset="UTF-8">
     <title>charlotte - that's some pig!</title>
@@ -12,6 +11,7 @@
     <meta name="viewport" content = "width = device-width, initial-scale = 1, user-scalable = no" />
     <link href="css/freeboard.css" rel="stylesheet" />
     <script src="js/freeboard.thirdparty.min.js"></script>
+    <script src="js/freeboard_plugins.min.js"></script>
     <script src="js/angularjs-1.6.1/angular.min.js"></script>
     <script src="js/app/dashboard.js"></script>
 </head>
@@ -38,10 +38,10 @@
                         <div class="dashboard-conf-col-dashboard-content">
                             <select class="dashboard-conf-select"></select>
                             <div class="dashboard-conf-action">
-                                <span class="dashboard-conf-action-item"><a href="#">New</a></span>
-                                <span class="dashboard-conf-action-item"><a href="#">Save</a></span>
-                                <span class="dashboard-conf-action-item"><a href="#">Load</a></span>
-                                <span class="dashboard-conf-action-item dashboard-conf-action-item-last"><a href="#">Delete</a></span>
+                                <span class="dashboard-conf-action-item"><a href="#" ng-click="onClickNewDashboard()">New</a></span>
+                                <span class="dashboard-conf-action-item"><a href="#" ng-click="onClickSaveDashboard()">Save</a></span>
+                                <span class="dashboard-conf-action-item"><a href="#" ng-click="onClickLoadDashboard()">Load</a></span>
+                                <span class="dashboard-conf-action-item dashboard-conf-action-item-last"><a href="#" ng-click="onClickDeleteDashboard()">Delete</a></span>
                             </div>
                         </div>
                     </div>
@@ -50,9 +50,9 @@
                         <div class="dashboard-conf-col-datasources-content">
                             <select class="dashboard-conf-select"></select>
                             <div class="dashboard-conf-action">
-                                <span class="dashboard-conf-action-item"><a href="#">New</a></span>
-                                <span class="dashboard-conf-action-item">Last Updated: 09:54:10 - <a href="#">Refresh</a></span>
-                                <span class="dashboard-conf-action-item dashboard-conf-action-item-last"><a href="#">Delete</a></span>
+                                <span class="dashboard-conf-action-item"><a href="#" ng-click="onClickNewDataSource()">New</a></span>
+                                <span class="dashboard-conf-action-item">Last Updated: 09:54:10 - <a href="#" ng-click="onClickRefreshDataSource()">Refresh</a></span>
+                                <span class="dashboard-conf-action-item dashboard-conf-action-item-last"><a href="#" ng-click="onClickDeleteDataSource()">Delete</a></span>
                             </div>
                         </div>
                     </div>
@@ -60,10 +60,9 @@
 
                 <div id="dashboard-conf-bottom">
                     <div class="dashboard-conf-button-center">
-                        xx
+                        <button class="dashboard-conf-button">Add Pane</button>
+                        <button class="dashboard-conf-button">Expand/Contract</button>
                     </div>
-                    <button class="dashboard-conf-button">Add Pane</button>
-                    <button class="dashboard-conf-button">Expand/Contract</button>
                 </div>
             </div>
             <!-- END NEW -->

@@ -72,6 +72,10 @@ func (s *CharlotteServer) startDashboard() {
 	// r.HandleFunc("/api/relations/{id}/{levels}", s.handleGetThingsRelations)
 	r.HandleFunc("/", s.handleDashboard)
 	r.HandleFunc("/?{dashboard}", s.handleDashboard)
+	r.HandleFunc("/service/dashboards", s.handleServiceListDashboards)
+	r.HandleFunc("/service/dashboard/{id}", s.handleServiceLoadDashboard)
+	r.HandleFunc("/service/dashboard/{id}", s.handleServiceDeleteDashboard).Methods("DELETE")
+	r.HandleFunc("/service/dashboard/{id}", s.handleServiceSaveDashboard).Methods("PUT")
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./webapp/static/")))
 	http.Handle("/", gziphandler.GzipHandler(r))
@@ -102,6 +106,23 @@ func (s *CharlotteServer) handleDashboard(rw http.ResponseWriter, req *http.Requ
 	}
 
 	s.renderTemplate(rw, "home", m)
+}
+
+// Services
+func (s *CharlotteServer) handleServiceListDashboards(rw http.ResponseWriter, req *http.Request) {
+	log.Println("List Dashboards")
+}
+
+func (s *CharlotteServer) handleServiceSaveDashboard(rw http.ResponseWriter, req *http.Request) {
+	log.Println("Save Dashboard")
+}
+
+func (s *CharlotteServer) handleServiceLoadDashboard(rw http.ResponseWriter, req *http.Request) {
+	log.Println("Load Dashboard")
+}
+
+func (s *CharlotteServer) handleServiceDeleteDashboard(rw http.ResponseWriter, req *http.Request) {
+	log.Println("Delete Dashboard")
 }
 
 type PageModel struct {
