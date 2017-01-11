@@ -580,6 +580,17 @@ function FreeboardModel(datasourcePlugins, widgetPlugins, freeboardUI)
 		self.addPane(newPane);
 	}
 
+	// NOTE: CUSTOM START
+	this.expandGridColumn = function() {
+        freeboardUI.addGridColumnLeft();
+        freeboardUI.addGridColumnRight();
+	}
+
+	this.contractGridColumn = function() {
+        freeboardUI.subGridColumnLeft();
+        freeboardUI.subGridColumnRight();
+	}
+    // NOTE: CUSTOM ENDS
 	this.addGridColumnLeft = function()
 	{
 		freeboardUI.addGridColumnLeft();
@@ -1083,6 +1094,12 @@ function FreeboardUI()
 		removeAllPanes : function()
 		{
 			grid.remove_all_widgets();
+		},
+		expandGridColumn: function() {
+            expandGridColumn();
+		},
+		contractGridColumn: function() {
+			contractGridColumn();
 		},
 		addGridColumnLeft : function()
 		{

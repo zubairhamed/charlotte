@@ -9,16 +9,21 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="viewport" content = "width = device-width, initial-scale = 1, user-scalable = no" />
+    <!-- link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap/bootstrap-theme.min.css" rel="stylesheet" / -->
     <link href="css/freeboard.css" rel="stylesheet" />
     <script src="js/freeboard.thirdparty.min.js"></script>
     <script src="js/freeboard_plugins.min.js"></script>
     <script src="js/angularjs-1.6.1/angular.min.js"></script>
+    <!-- script src="js/bootstrap/bootstrap.min.js"></script -->
+
     <script src="js/app/dashboard.js"></script>
+
 </head>
 <body>
 <div id="board-content">
     <img id="dash-logo" data-bind="attr:{src: header_image}, visible:header_image()">
-    <div class="gridster responsive-column-width">
+    <div class="gridster responsive-column-width" style="margin-top: 60px;">
         <ul data-bind="grid: true">
         </ul>
     </div>
@@ -60,8 +65,7 @@
 
                 <div id="dashboard-conf-bottom">
                     <div class="dashboard-conf-button-center">
-                        <button class="dashboard-conf-button">Add Pane</button>
-                        <button class="dashboard-conf-button">Expand/Contract</button>
+                        <button class="dashboard-conf-button" data-bind="click: createPane">Add Pane</button>
                     </div>
                 </div>
             </div>
@@ -116,22 +120,14 @@
             -->
         </div>
     </div>
-    <div id="column-tools" class="responsive-column-width">
-        <ul class="board-toolbar left-columns">
-            <li class="column-tool add" data-bind="click: addGridColumnLeft"><span class="column-icon right"></span><i class="icon-arrow-left icon-white"></i></li>
-            <li class="column-tool sub" data-bind="click: subGridColumnLeft"><span class="column-icon left"></span><i class="icon-arrow-right icon-white"></i></li>
-        </ul>
-        <ul class="board-toolbar right-columns">
-            <li class="column-tool sub" data-bind="click: subGridColumnRight"><span class="column-icon right"></span><i class="icon-arrow-left icon-white"></i></li>
-            <li class="column-tool add" data-bind="click: addGridColumnRight"><span class="column-icon left"></span><i class="icon-arrow-right icon-white"></i></li>
-        </ul>
-    </div>
     <div class="gray-line"></div>
 
-    <div id="toggle-header" data-bind="click: toggleEditing">
+    <div id="toggle-header">
         <div id="title-header">charlotte</div>
-        <i id="toggle-header-icon" class="icon-wrench icon-white"></i>
-        <div id="tiny-menu">MENU</div>
+        <i id="toggle-header-icon" class="icon-wrench icon-white" data-bind="click: toggleEditing"></i>
+        <div id="tiny-menu">
+            <div><a href="/things">Things</div>
+        </div>
     </div>
 
 </header>

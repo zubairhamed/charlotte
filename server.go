@@ -70,8 +70,15 @@ func (s *CharlotteServer) startDashboard() {
 	r := mux.NewRouter()
 
 	// r.HandleFunc("/api/relations/{id}/{levels}", s.handleGetThingsRelations)
-	r.HandleFunc("/", s.handleDashboard)
-	r.HandleFunc("/?{dashboard}", s.handleDashboard)
+	r.HandleFunc("/", s.handleViewDashboard)
+	r.HandleFunc("/?{dashboard}", s.handleViewDashboard)
+	r.HandleFunc("/things", s.handleViewThings)
+	r.HandleFunc("/things/add", s.handleViewAddThings)
+	r.HandleFunc("/auth", s.handleViewAuthentication)
+	r.HandleFunc("/connectors", s.handleViewConnectors)
+	r.HandleFunc("/messages", s.handleViewMessages)
+
+	// Services
 	r.HandleFunc("/service/dashboards", s.handleServiceListDashboards)
 	r.HandleFunc("/service/dashboard/{id}", s.handleServiceLoadDashboard)
 	r.HandleFunc("/service/dashboard/{id}", s.handleServiceDeleteDashboard).Methods("DELETE")
@@ -82,14 +89,6 @@ func (s *CharlotteServer) startDashboard() {
 
 	log.Println("Running Dashboard on :8010. Ready to rock!")
 	http.ListenAndServe(":8010", nil)
-
-	/*
-		/
-		/?<dashboardname>
-		/things/?<id>
-		/things/add
-		/connectors/?<id>
-	*/
 }
 
 func (s *CharlotteServer) renderTemplate(w http.ResponseWriter, tmpl string, p interface{}) {
@@ -100,12 +99,46 @@ func (s *CharlotteServer) renderTemplate(w http.ResponseWriter, tmpl string, p i
 	}
 }
 
-func (s *CharlotteServer) handleDashboard(rw http.ResponseWriter, req *http.Request) {
+func (s *CharlotteServer) handleViewDashboard(rw http.ResponseWriter, req *http.Request) {
 	m := &PageModel{
 		Name: "home",
 	}
-
 	s.renderTemplate(rw, "home", m)
+}
+
+func (s *CharlotteServer) handleViewThings(rw http.ResponseWriter, req *http.Request) {
+	m := &PageModel{
+		Name: "things",
+	}
+	s.renderTemplate(rw, "things", m)
+}
+
+func (s *CharlotteServer) handleViewAddThings(rw http.ResponseWriter, req *http.Request) {
+	m := &PageModel{
+		Name: "things-add",
+	}
+	s.renderTemplate(rw, "things-add", m)
+}
+
+func (s *CharlotteServer) handleViewAuthentication(rw http.ResponseWriter, req *http.Request) {
+	m := &PageModel{
+		Name: "auth",
+	}
+	s.renderTemplate(rw, "auth", m)
+}
+
+func (s *CharlotteServer) handleViewConnectors(rw http.ResponseWriter, req *http.Request) {
+	m := &PageModel{
+		Name: "connectors",
+	}
+	s.renderTemplate(rw, "connectors", m)
+}
+
+func (s *CharlotteServer) handleViewMessages(rw http.ResponseWriter, req *http.Request) {
+	m := &PageModel{
+		Name: "messages",
+	}
+	s.renderTemplate(rw, "messages", m)
 }
 
 // Services
@@ -123,8 +156,4 @@ func (s *CharlotteServer) handleServiceLoadDashboard(rw http.ResponseWriter, req
 
 func (s *CharlotteServer) handleServiceDeleteDashboard(rw http.ResponseWriter, req *http.Request) {
 	log.Println("Delete Dashboard")
-}
-
-type PageModel struct {
-	Name string
 }
