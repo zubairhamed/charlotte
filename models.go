@@ -1,4 +1,4 @@
-package webapp
+package charlotte
 
 type PageModel struct {
 	Name string

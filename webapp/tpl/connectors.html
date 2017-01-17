@@ -1,4 +1,54 @@
 #{ define "connectors" }#
 #{ template "header" . }#
+        </div>
+    </div>
+</nav>
+<!--
+    Popup:
+        Enable/Disable
+        Config Parameters(Connector Dependent)
+-->
+<h2 class="pagetitle">Connectors</h2>
+<div class="container content-container">
 
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>protocol</th>
+            <th>status</th>
+            <th>uptime</th>
+            <th>errors</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><a href="javascript:void(0);" data-toggle="modal" data-target="#connModal">http</a></td>
+            <td>running</td>
+            <td>~ 22h 52s</td>
+            <td>21</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Modal Dialog -->
+    <div id="connModal" class="modal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body…</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+#{ template "footer" . }#
 #{ end }#

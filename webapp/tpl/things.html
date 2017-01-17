@@ -1,4 +1,46 @@
 #{ define "things" }#
 #{ template "header" . }#
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/things" class="navitem-menu navitem-menu-solo navitem-menu-sub">add new</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
+<h2 class="pagetitle">Manage Things</h2>
+<div class="container content-container">
+    <div class="input-group search-box">
+        <span class="input-group-addon">Search Things</span>
+        <input type="text" class="form-control">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Go</button>
+        </span>
+    </div>
+    <br />
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>created</th>
+                <th>last update</th>
+                <th>delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="t in things">
+                <td><a href="javascript:void(0);" ng-click="OnViewEditThing(auth.id)">{{t.id}}</a></td>
+                <td>%id%</td>
+                <td>xx/xx/xxxx</td>
+                <td>xx/xx/xxxx</td>
+                <td>x</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    <!--
+        [Search Bar][btn]
+        [results grid]
+    -->
+
+#{ template "footer" . }#
 #{ end }#

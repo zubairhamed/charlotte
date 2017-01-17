@@ -77,12 +77,43 @@ func (s *CharlotteServer) startDashboard() {
 	r.HandleFunc("/auth", s.handleViewAuthentication)
 	r.HandleFunc("/connectors", s.handleViewConnectors)
 	r.HandleFunc("/messages", s.handleViewMessages)
+	r.HandleFunc("/settings", s.handleViewSettings)
 
 	// Services
 	r.HandleFunc("/service/dashboards", s.handleServiceListDashboards)
 	r.HandleFunc("/service/dashboard/{id}", s.handleServiceLoadDashboard)
 	r.HandleFunc("/service/dashboard/{id}", s.handleServiceDeleteDashboard).Methods("DELETE")
 	r.HandleFunc("/service/dashboard/{id}", s.handleServiceSaveDashboard).Methods("PUT")
+
+	// Things Service
+	r.HandleFunc("/service/things", s.handleServiceThingsList)
+	r.HandleFunc("/service/things", s.handleServiceThingsAdd)
+	r.HandleFunc("/service/things/{id}", s.handleServiceThingsGet)
+	r.HandleFunc("/service/things/{id}", s.handleServiceThingsUpdate)
+	r.HandleFunc("/service/things/search", s.handleServiceThingsSearch)
+
+	// Connector Service
+	r.HandleFunc("/service/connectors", s.handleServiceConnectorsList)
+	r.HandleFunc("/service/connectors/{id}", s.handleServiceConnectorGet)
+	r.HandleFunc("/service/connectors/{id}", s.handleServiceConnectorUpdate)
+
+	// Auth Service
+	r.HandleFunc("/service/auth", s.handleServiceAuthList)
+	r.HandleFunc("/service/auth", s.handleServiceAuthAdd)
+	r.HandleFunc("/service/auth/{id}", s.handleServiceAuthGet)
+	r.HandleFunc("/service/auth/{id}", s.handleServiceAuthUpdate)
+	r.HandleFunc("/service/auth/search", s.handleServiceAuthSearch)
+
+	// Messages Service
+	// List
+	// Get
+	// Search
+
+	// Settings Service
+	// Get
+	// Update
+
+
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./webapp/static/")))
 	http.Handle("/", gziphandler.GzipHandler(r))
@@ -135,11 +166,21 @@ func (s *CharlotteServer) handleViewConnectors(rw http.ResponseWriter, req *http
 }
 
 func (s *CharlotteServer) handleViewMessages(rw http.ResponseWriter, req *http.Request) {
+
 	m := &PageModel{
 		Name: "messages",
 	}
 	s.renderTemplate(rw, "messages", m)
 }
+
+func (s *CharlotteServer) handleViewSettings(rw http.ResponseWriter, req *http.Request) {
+
+	m := &PageModel{
+		Name: "settings",
+	}
+	s.renderTemplate(rw, "settings", m)
+}
+
 
 // Services
 func (s *CharlotteServer) handleServiceListDashboards(rw http.ResponseWriter, req *http.Request) {
@@ -157,3 +198,17 @@ func (s *CharlotteServer) handleServiceLoadDashboard(rw http.ResponseWriter, req
 func (s *CharlotteServer) handleServiceDeleteDashboard(rw http.ResponseWriter, req *http.Request) {
 	log.Println("Delete Dashboard")
 }
+
+func (s *CharlotteServer) handleServiceThingsList(rw http.ResponseWriter, req *http.Request) {}
+func (s *CharlotteServer) handleServiceThingsAdd(rw http.ResponseWriter, req *http.Request) {}
+func (s *CharlotteServer) handleServiceThingsGet(rw http.ResponseWriter, req *http.Request) {}
+func (s *CharlotteServer) handleServiceThingsUpdate(rw http.ResponseWriter, req *http.Request) {}
+func (s *CharlotteServer) handleServiceThingsSearch(rw http.ResponseWriter, req *http.Request) {}
+func (s *CharlotteServer) handleServiceConnectorsList(rw http.ResponseWriter, req *http.Request) {}
+func (s *CharlotteServer) handleServiceConnectorGet(rw http.ResponseWriter, req *http.Request) {}
+func (s *CharlotteServer) handleServiceConnectorUpdate(rw http.ResponseWriter, req *http.Request) {}
+func (s *CharlotteServer) handleServiceAuthList(rw http.ResponseWriter, req *http.Request) {}
+func (s *CharlotteServer) handleServiceAuthAdd(rw http.ResponseWriter, req *http.Request) {}
+func (s *CharlotteServer) handleServiceAuthGet(rw http.ResponseWriter, req *http.Request) {}
+func (s *CharlotteServer) handleServiceAuthUpdate(rw http.ResponseWriter, req *http.Request) {}
+func (s *CharlotteServer) handleServiceAuthSearch(rw http.ResponseWriter, req *http.Request) {}
