@@ -9,18 +9,18 @@ import (
 	"log"
 )
 
-func NewRegistry() *Registry {
-	return &Registry{
-		db: &BoltDB{},
+func NewThingRegistry() *ThingRegistry {
+	return &ThingRegistry{
+		db: &ThingBoltDB{},
 	}
 }
 
-type Registry struct {
+type ThingRegistry struct {
 	nc *nats.Conn
-	db *BoltDB
+	db *ThingBoltDB
 }
 
-func (s *Registry) onUpdateThingProperty(m *nats.Msg) {
+func (s *ThingRegistry) onUpdateThingProperty(m *nats.Msg) {
 	// Convert to Message
 	msg := DecodeMessage(m.Data)
 
@@ -30,7 +30,7 @@ func (s *Registry) onUpdateThingProperty(m *nats.Msg) {
 	s.db.UpdateProperty(devId, vars["prop"], string(msg.Payload))
 }
 
-func (s *Registry) Start() error {
+func (s *ThingRegistry) Start() error {
 	log.Println("Starting Thing Registry")
 	nc, err := CreateNatsClient(nats.DefaultURL)
 	if err != nil {
@@ -50,10 +50,10 @@ func (s *Registry) Start() error {
 	return nil
 }
 
-type BoltDB struct {
+type ThingBoltDB struct {
 }
 
-func (b *BoltDB) Setup() error {
+func (b *ThingBoltDB) Setup() error {
 	db, err := b.open()
 	if err != nil {
 		log.Fatal(err)
@@ -77,19 +77,19 @@ func (b *BoltDB) Setup() error {
 	return e
 }
 
-func (b *BoltDB) open() (*bolt.DB, error) {
+func (b *ThingBoltDB) open() (*bolt.DB, error) {
 	return bolt.Open("registry.db", 0600, nil)
 }
 
-func (b *BoltDB) close(db *bolt.DB) {
+func (b *ThingBoltDB) close(db *bolt.DB) {
 	db.Close()
 }
 
-func (b *BoltDB) GetThing(id string) map[string]interface{} {
+func (b *ThingBoltDB) GetThing(id string) map[string]interface{} {
 	return make(map[string]interface{})
 }
 
-func (b *BoltDB) UpdateProperty(id, prop, value string) error {
+func (b *ThingBoltDB) UpdateProperty(id, prop, value string) error {
 	db, err := b.open()
 	if err != nil {
 		return err
@@ -118,7 +118,7 @@ func (b *BoltDB) UpdateProperty(id, prop, value string) error {
 }
 
 // TODO
-func (b *BoltDB) GetThingModel() (thing *td.Thing, err error) {
+func (b *ThingBoltDB) GetThingModel() (thing *td.Thing, err error) {
 	db, err := b.open()
 	if err != nil {
 		return
@@ -128,7 +128,7 @@ func (b *BoltDB) GetThingModel() (thing *td.Thing, err error) {
 	return
 }
 
-func (b *BoltDB) DeleteThing() (err error) {
+func (b *ThingBoltDB) DeleteThing() (err error) {
 	db, err := b.open()
 	if err != nil {
 		return err
@@ -138,7 +138,7 @@ func (b *BoltDB) DeleteThing() (err error) {
 	return
 }
 
-func (b *BoltDB) UpdateThing() (err error) {
+func (b *ThingBoltDB) UpdateThing() (err error) {
 	db, err := b.open()
 	if err != nil {
 		return err

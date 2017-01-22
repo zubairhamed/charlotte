@@ -1,4 +1,4 @@
-angular.module('charlotte-app', []).controller('app-controller', function($scope) {
+APP.controller('app-controller', function($scope) {
     freeboard.initialize(true);
     freeboard.setEditing(false);
 

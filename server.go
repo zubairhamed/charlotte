@@ -86,10 +86,18 @@ func (s *CharlotteServer) startDashboard() {
 	r.HandleFunc("/service/dashboard/{id}", s.handleServiceSaveDashboard).Methods("PUT")
 
 	// Things Service
-	r.HandleFunc("/service/things", s.handleServiceThingsList)
-	r.HandleFunc("/service/things", s.handleServiceThingsAdd)
+	/*
+		/services/things 		GET 	list
+		/services/things		POST	create new
+		/services/things/:id	GET		get by id
+		/services/things/:id	PUT		update by id
+		/services/things/:id	DELETE	delete by id
+
+	 */
+	r.HandleFunc("/service/things", s.handleServiceThingsList).Methods("GET")
+	r.HandleFunc("/service/things/{id}", s.handleServiceThingsAdd).Methods("POST")
 	r.HandleFunc("/service/things/{id}", s.handleServiceThingsGet)
-	r.HandleFunc("/service/things/{id}", s.handleServiceThingsUpdate)
+	r.HandleFunc("/service/things/{id}", s.handleServiceThingsUpdate).Methods("PUT")
 	r.HandleFunc("/service/things/search", s.handleServiceThingsSearch)
 
 	// Connector Service
@@ -199,16 +207,58 @@ func (s *CharlotteServer) handleServiceDeleteDashboard(rw http.ResponseWriter, r
 	log.Println("Delete Dashboard")
 }
 
-func (s *CharlotteServer) handleServiceThingsList(rw http.ResponseWriter, req *http.Request) {}
-func (s *CharlotteServer) handleServiceThingsAdd(rw http.ResponseWriter, req *http.Request) {}
-func (s *CharlotteServer) handleServiceThingsGet(rw http.ResponseWriter, req *http.Request) {}
-func (s *CharlotteServer) handleServiceThingsUpdate(rw http.ResponseWriter, req *http.Request) {}
-func (s *CharlotteServer) handleServiceThingsSearch(rw http.ResponseWriter, req *http.Request) {}
-func (s *CharlotteServer) handleServiceConnectorsList(rw http.ResponseWriter, req *http.Request) {}
-func (s *CharlotteServer) handleServiceConnectorGet(rw http.ResponseWriter, req *http.Request) {}
-func (s *CharlotteServer) handleServiceConnectorUpdate(rw http.ResponseWriter, req *http.Request) {}
-func (s *CharlotteServer) handleServiceAuthList(rw http.ResponseWriter, req *http.Request) {}
-func (s *CharlotteServer) handleServiceAuthAdd(rw http.ResponseWriter, req *http.Request) {}
-func (s *CharlotteServer) handleServiceAuthGet(rw http.ResponseWriter, req *http.Request) {}
-func (s *CharlotteServer) handleServiceAuthUpdate(rw http.ResponseWriter, req *http.Request) {}
-func (s *CharlotteServer) handleServiceAuthSearch(rw http.ResponseWriter, req *http.Request) {}
+func (s *CharlotteServer) handleServiceThingsList(rw http.ResponseWriter, req *http.Request) {
+
+}
+
+func (s *CharlotteServer) handleServiceThingsAdd(rw http.ResponseWriter, req *http.Request) {
+	log.Println("Add Thing")
+}
+
+func (s *CharlotteServer) handleServiceThingsGet(rw http.ResponseWriter, req *http.Request) {
+	log.Println("Add Thing")
+}
+
+func (s *CharlotteServer) handleServiceThingsUpdate(rw http.ResponseWriter, req *http.Request) {
+
+}
+
+func (s *CharlotteServer) handleServiceThingsSearch(rw http.ResponseWriter, req *http.Request) {
+
+}
+
+func (s *CharlotteServer) handleServiceConnectorsList(rw http.ResponseWriter, req *http.Request) {
+
+}
+
+func (s *CharlotteServer) handleServiceConnectorGet(rw http.ResponseWriter, req *http.Request) {
+
+}
+
+func (s *CharlotteServer) handleServiceConnectorUpdate(rw http.ResponseWriter, req *http.Request) {
+
+}
+
+func (s *CharlotteServer) handleServiceAuthList(rw http.ResponseWriter, req *http.Request) {
+
+}
+
+func (s *CharlotteServer) handleServiceAuthAdd(rw http.ResponseWriter, req *http.Request) {
+
+}
+
+func (s *CharlotteServer) handleServiceAuthGet(rw http.ResponseWriter, req *http.Request) {
+
+}
+
+func (s *CharlotteServer) handleServiceAuthUpdate(rw http.ResponseWriter, req *http.Request) {
+
+}
+
+func (s *CharlotteServer) handleServiceAuthSearch(rw http.ResponseWriter, req *http.Request) {
+
+}
+
+func (s *CharlotteServer) writeJsonModel(m interface{}, writer http.ResponseWriter) {
+
+}

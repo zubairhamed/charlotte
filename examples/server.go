@@ -13,7 +13,9 @@ func main() {
 	go runServer()
 
 	// Runs Thing Registry
-	go runRegistry()
+	go runThingsRegistry()
+
+	go runCredsRegistry()
 
 	// Runs WebAPI
 	go runWebApi()
@@ -38,8 +40,16 @@ func runServer() {
 	}
 }
 
-func runRegistry() {
-	server := charlotte.NewRegistry()
+func runCredsRegistry() {
+	server := charlotte.NewCredsRegistry();
+
+	if err := server.Start(); err != nil {
+		panic(err.Error())
+	}
+}
+
+func runThingsRegistry() {
+	server := charlotte.NewThingRegistry()
 
 	if err := server.Start(); err != nil {
 		panic(err.Error())
