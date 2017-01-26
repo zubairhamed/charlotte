@@ -1,9 +1,9 @@
 package charlotte
 
 import (
-	"log"
-	"github.com/nats-io/go-nats"
 	"github.com/boltdb/bolt"
+	"github.com/nats-io/go-nats"
+	"log"
 )
 
 func NewCredsRegistry() *CredentialsRegistry {
@@ -26,7 +26,6 @@ func (s *CredentialsRegistry) Start() (err error) {
 	}
 	s.nc = nc
 
-
 	// TODO
 	/*
 		Authenticate
@@ -34,13 +33,11 @@ func (s *CredentialsRegistry) Start() (err error) {
 		Get
 		List
 		Update
-	 */
+	*/
 	return s.db.Setup()
 }
 
-
 type CredsBoltDB struct {
-
 }
 
 func (b *CredsBoltDB) Setup() error {

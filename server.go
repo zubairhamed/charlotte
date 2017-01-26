@@ -1,14 +1,17 @@
 package charlotte
 
 import (
+	"encoding/json"
 	"github.com/NYTimes/gziphandler"
 	"github.com/alecthomas/template"
 	"github.com/gorilla/mux"
+	"github.com/nats-io/go-nats"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 func NewServer() Server {
@@ -20,6 +23,7 @@ func NewServer() Server {
 type CharlotteServer struct {
 	connectors []Connector
 	tpl        *template.Template
+	nc         *nats.Conn
 }
 
 func (s *CharlotteServer) RegisterConnector(conn Connector) error {
@@ -29,6 +33,10 @@ func (s *CharlotteServer) RegisterConnector(conn Connector) error {
 }
 
 func (s *CharlotteServer) Start() (err error) {
+
+	nc, err := CreateNatsClient(nats.DefaultURL)
+	s.nc = nc
+
 	for _, v := range s.connectors {
 		go v.Start()
 	}
@@ -43,7 +51,6 @@ func (s *CharlotteServer) createTemplateFuncMap() template.FuncMap {
 	templateMap["eq"] = func(a, b interface{}) bool {
 		return a == b
 	}
-
 	return templateMap
 }
 
@@ -93,23 +100,23 @@ func (s *CharlotteServer) startDashboard() {
 		/services/things/:id	PUT		update by id
 		/services/things/:id	DELETE	delete by id
 
-	 */
+	*/
 	r.HandleFunc("/service/things", s.handleServiceThingsList).Methods("GET")
 	r.HandleFunc("/service/things/{id}", s.handleServiceThingsAdd).Methods("POST")
-	r.HandleFunc("/service/things/{id}", s.handleServiceThingsGet)
+	r.HandleFunc("/service/things/{id}", s.handleServiceThingsGet).Methods("GET")
 	r.HandleFunc("/service/things/{id}", s.handleServiceThingsUpdate).Methods("PUT")
-	r.HandleFunc("/service/things/search", s.handleServiceThingsSearch)
+	r.HandleFunc("/service/things/{id}", s.handleServiceThingsDelete).Methods("DELETE")
 
 	// Connector Service
-	r.HandleFunc("/service/connectors", s.handleServiceConnectorsList)
-	r.HandleFunc("/service/connectors/{id}", s.handleServiceConnectorGet)
-	r.HandleFunc("/service/connectors/{id}", s.handleServiceConnectorUpdate)
+	r.HandleFunc("/service/connectors", s.handleServiceConnectorsList).Methods("GET")
+	r.HandleFunc("/service/connectors/{id}", s.handleServiceConnectorGet).Methods("GET")
+	r.HandleFunc("/service/connectors/{id}", s.handleServiceConnectorUpdate).Methods("PUT")
 
 	// Auth Service
-	r.HandleFunc("/service/auth", s.handleServiceAuthList)
-	r.HandleFunc("/service/auth", s.handleServiceAuthAdd)
-	r.HandleFunc("/service/auth/{id}", s.handleServiceAuthGet)
-	r.HandleFunc("/service/auth/{id}", s.handleServiceAuthUpdate)
+	r.HandleFunc("/service/auth", s.handleServiceAuthList).Methods("GET")
+	r.HandleFunc("/service/auth", s.handleServiceAuthAdd).Methods("POST")
+	r.HandleFunc("/service/auth/{id}", s.handleServiceAuthGet).Methods("GET")
+	r.HandleFunc("/service/auth/{id}", s.handleServiceAuthUpdate).Methods("PUT")
 	r.HandleFunc("/service/auth/search", s.handleServiceAuthSearch)
 
 	// Messages Service
@@ -120,8 +127,6 @@ func (s *CharlotteServer) startDashboard() {
 	// Settings Service
 	// Get
 	// Update
-
-
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./webapp/static/")))
 	http.Handle("/", gziphandler.GzipHandler(r))
@@ -189,7 +194,6 @@ func (s *CharlotteServer) handleViewSettings(rw http.ResponseWriter, req *http.R
 	s.renderTemplate(rw, "settings", m)
 }
 
-
 // Services
 func (s *CharlotteServer) handleServiceListDashboards(rw http.ResponseWriter, req *http.Request) {
 	log.Println("List Dashboards")
@@ -209,21 +213,72 @@ func (s *CharlotteServer) handleServiceDeleteDashboard(rw http.ResponseWriter, r
 
 func (s *CharlotteServer) handleServiceThingsList(rw http.ResponseWriter, req *http.Request) {
 
+	things := []*ThingModel{}
+
+	t := &ThingModel{}
+	t.Id = "abc123"
+	t.Created = time.Now().UnixNano() / 1000000
+	t.LastUpdated = time.Now().UnixNano() / 1000000
+	t.Schema = "{}"
+	t.State = "{}"
+
+	things = append(things, t)
+
+	s.writeJsonModel(things, rw)
 }
 
 func (s *CharlotteServer) handleServiceThingsAdd(rw http.ResponseWriter, req *http.Request) {
-	log.Println("Add Thing")
+	log.Println("Add Thing Instance")
+
+	var msg map[string]interface{}
+	decoder := json.NewDecoder(req.Body)
+	err := decoder.Decode(&msg)
+	if err != nil {
+		err.Error()
+	}
+
+	// TODO: Call request-response to add thing
+	/*
+		// Requests
+		var response string
+		err := c.Request("help", "help me", &response, 10*time.Millisecond)
+		if err != nil {
+			fmt.Printf("Request failed: %v\n", err)
+		}
+
+		// Replying
+		c.Subscribe("help", func(subj, reply string, msg string) {
+			c.Publish(reply, "I can help!")
+		})
+	 */
+
+	log.Println(msg["id"])
+	log.Println(msg["Schema"])
+	log.Println(msg["State"])
 }
 
 func (s *CharlotteServer) handleServiceThingsGet(rw http.ResponseWriter, req *http.Request) {
-	log.Println("Add Thing")
+	id := mux.Vars(req)["id"]
+
+	log.Println("Get Thing", id)
+
+	t := &ThingModel{}
+	t.Id = "abc123"
+	t.Created = time.Now().UnixNano() / 1000000
+	t.LastUpdated = time.Now().UnixNano() / 1000000
+	t.Schema = "{}"
+	t.State = "{}"
+
+	// TODO: Send GET Request to ThingRegistry
+
+	s.writeJsonModel(t, rw)
 }
 
 func (s *CharlotteServer) handleServiceThingsUpdate(rw http.ResponseWriter, req *http.Request) {
-
+	log.Println("Update Thing Instance")
 }
 
-func (s *CharlotteServer) handleServiceThingsSearch(rw http.ResponseWriter, req *http.Request) {
+func (s *CharlotteServer) handleServiceThingsDelete(rw http.ResponseWriter, req *http.Request) {
 
 }
 
@@ -259,6 +314,9 @@ func (s *CharlotteServer) handleServiceAuthSearch(rw http.ResponseWriter, req *h
 
 }
 
-func (s *CharlotteServer) writeJsonModel(m interface{}, writer http.ResponseWriter) {
+func (s *CharlotteServer) writeJsonModel(m interface{}, rw http.ResponseWriter) {
+	j, _ := json.Marshal(m)
+	rw.Header().Set("Content-Type", "application/json")
+	rw.Write(j)
 
 }

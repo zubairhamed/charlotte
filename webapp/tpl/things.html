@@ -30,11 +30,10 @@
         </thead>
         <tbody>
             <tr ng-repeat="t in things">
-                <td><a href="javascript:void(0);" ng-click="OnViewEditThing(auth.id)">{{t.id}}</a></td>
-                <td>%id%</td>
-                <td>xx/xx/xxxx</td>
-                <td>xx/xx/xxxx</td>
-                <td>x</td>
+                <td><a href="javascript:void(0);" ng-click="OnEdit(t.id)">{{t.id}}</a></td>
+                <td>{{ printDate(t.created) }}</td>
+                <td>{{ printDate(t.lastUpdated) }}</td>
+                <td><a href="javascript:void(0);" ng-click="OnConfirmDelete(t.id)">[delete]</a></td>
             </tr>
         </tbody>
     </table>
@@ -65,8 +64,8 @@
                     <div ng-class="{ 'tab-pane active': activeTab === 1, 'tab-pane': activeTab !== 1 }">
                         <fieldset>
                             <div class="form-group">
-                                <label class="control-label" for="fldThingName">Thing Name</label>
-                                <input class="form-control" id="fldThingName" ng-model="thingName" type="text">
+                                <label class="control-label" for="fldThingId">Thing ID</label>
+                                <input class="form-control" id="fldThingId" ng-model="thingId" type="text">
                             </div>
                         </fieldset>
                     </div>
@@ -75,7 +74,8 @@
                             <div class="form-group">
                                 <div class="col-lg-12">
                                     <span class="help-block">JSON Content</span>
-                                    <textarea class="form-control" ng-model="thingSchema" rows="18"></textarea>
+                                    <div ui-ace ng-model="thingSchema">Ace here</div>
+                                    <!-- <textarea class="form-control" ng-model="thingSchema" rows="18"></textarea> -->
                                 </div>
                             </div>
                         </fieldset>
@@ -94,16 +94,27 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" ng-click="OnSave()">Save changes</button>
+                <button type="button" class="btn btn-primary" ng-click="OnUpsert()">Save changes</button>
             </div>
         </div>
     </div>
 </div>
 
-    <!--
-        [Search Bar][btn]
-        [results grid]
-    -->
+<!-- Confirm Delete -->
+<div class="modal fade" id="confirm-delete-thing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">Delete this Thing?</div>
+            <div class="modal-body">
+                You're about to delete {{ deleteThing }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger btn-ok" ng-click="OnDelete(deleteThing)">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 #{ template "footer" . }#
 #{ end }#

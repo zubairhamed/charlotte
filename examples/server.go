@@ -41,7 +41,7 @@ func runServer() {
 }
 
 func runCredsRegistry() {
-	server := charlotte.NewCredsRegistry();
+	server := charlotte.NewCredsRegistry()
 
 	if err := server.Start(); err != nil {
 		panic(err.Error())
